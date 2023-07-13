@@ -28,5 +28,5 @@ Stasinopoulos D. M. Rigby R.A. Heller G. Voudouris V. De Bastiani F. (2017) \emp
 \seealso{\code{\link[gamlss.add]{ga}}} 
 \examples{
 m1 <- gamlss(R~ma(~A+Fl), data=rent, family=GA)
-plotmo(getSmo(m1))
+plot(getSmo(m1))
 }

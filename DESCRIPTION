@@ -1,17 +1,16 @@
-Package: gamlss.add
-Description: Interface for extra smooth functions including tensor products, 
-             neural networks and decision trees.
-Title: Extra Additive Terms for Generalized Additive Models for
-        Location Scale and Shape
-LazyLoad: yes
-Version: 5.1-7
-Date: 2020-02-03
-Depends: R (>= 2.15.0), gamlss.dist, gamlss (>= 2.4.0), mgcv, nnet,
-        rpart, graphics, stats, utils, grDevices, methods
-Suggests: lattice
-Author: Mikis Stasinopoulos <d.stasinopoulos@londonmet.ac.uk>, Bob Rigby, Vlasios Voudouris, Daniil Kiose
+Package: gamlss.add2
+Type: Package
+Title: More Extra Additive Terms for GAMLSS Models
+Version: 1.0-2
+Date: 2023-07-12
+Author: c(person("Mikis", "Stasinopoulos", role = c("aut", "cre", "cph"), 
+             email = "d.stasinopoulos@londonmet.ac.uk"),
+             person("Vlasios", "Voudouris", role = "ctb",  
+             person("Daniil", "Kiose", role = "ctb"),
+             person("Arthur", "Fendrich", role = "ctb"),
+           )
 Maintainer: Mikis Stasinopoulos <d.stasinopoulos@londonmet.ac.uk>
-License: GPL-2 | GPL-3
-URL: https://www.gamlss.org/
-NeedsCompilation: no
-Packaged: 2023-06-15 21:25:59 UTC; dimitriosstasinopoulos
+Depends: R (>= 2.15.0), gamlss.dist, gamlss (>= 2.4.0)
+Imports:  methods, earth, SOP, ranger
+Description: Interface of GAMLSS with the earth package.
+License: GPL-2 | GPL-3 

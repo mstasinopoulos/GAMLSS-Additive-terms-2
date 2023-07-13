@@ -8,9 +8,9 @@
 \description{
 The function \code{SOP()} (or \code{so()})  is an interface for fitting an additive P-Spline regression models using the separation of overlapping precision matrices (SOP) method of Rodriguez-Alvarez \emph{at al.} (2015, 2019) (implemented in the  package \pkg{SOP}) within GAMLSS.
 
-The idea is that SOP can be used for other parameters of the distribution rather than  only for \code{mu}.  Look in the help file of the package \pkg{SOP} for the available functions
- \pkg{SOP} contains two usefull functions: tensor product P-spline smoothing i.e. \code{~f(x1,x2)} and adaptive smoothing \code{~ad(x1)}.  
-
+The idea is that SOP can be used for other parameters of the distribution rather than  only for \code{mu}.  
+Look in the help file of the package \pkg{SOP} for the available functions
+\pkg{SOP} contains two usefull functions: tensor product P-spline smoothing i.e. \code{~f(x1,x2)} and adaptive smoothing \code{~ad(x1)}.  
 
 The function \code{gamlss.so()} is support for \code{so()}. It is not intended to be called directly by users. The function \code{gamlss.so()} is calling the function \code{sop()} of the package \pkg{SOP}.
 }
