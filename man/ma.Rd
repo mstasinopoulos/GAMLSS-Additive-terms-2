@@ -67,7 +67,8 @@ pp, 248-273, SAGE Publications Sage India: New Delhi, India. \doi{10.1177/147108
 
 \examples{
 m1 <- gamlss(R~ma(~Fl+A+B+loc), data=rent, family=GA)
-plot(getSmo(m1))
+library(plotmo)
+plotmo(getSmo(m1))
 }
 
 \keyword{regression}

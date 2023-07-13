@@ -7,10 +7,11 @@ Author: c(person("Mikis", "Stasinopoulos", role = c("aut", "cre", "cph"),
              email = "d.stasinopoulos@londonmet.ac.uk"),
              person("Vlasios", "Voudouris", role = "ctb",  
              person("Daniil", "Kiose", role = "ctb"),
-             person("Arthur", "Fendrich", role = "ctb"),
+             person("Arthur", "Fendrich", role = "ctb")
            )
 Maintainer: Mikis Stasinopoulos <d.stasinopoulos@londonmet.ac.uk>
 Depends: R (>= 2.15.0), gamlss.dist, gamlss (>= 2.4.0)
 Imports:  methods, earth, SOP, ranger
+Suggests: plotmo
 Description: Interface of GAMLSS with the earth package.
 License: GPL-2 | GPL-3 
