@@ -59,7 +59,6 @@ pp, 248-273, SAGE Publications Sage India: New Delhi, India. \doi{10.1177/147108
 
 (see also  \url{https://www.gamlss.com/}).
 
-
 }
 \author{Mikis Stasinopoilos, Vlasios Voudouris and Daniil Kiose}
 

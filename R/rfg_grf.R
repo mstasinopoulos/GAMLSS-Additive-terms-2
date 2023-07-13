@@ -2,17 +2,16 @@
 ################################################################################
 ################################################################################
 ################################################################################
-#require(ranger)
+require(grf)
 ################################################################################
 ################################################################################
 ################################################################################
 ################################################################################
-# Comment: I decided to override the 'tr' function, as other labels are ignored. I tried the 'rforest' label, but for some reason it fails.
-rf <- function(formula, ...){
+own <- function(formula, ...){
 	control <- as.list(match.call())
-	#---------------------------------
+#---------------------------------
 	scall <- deparse(sys.call(), width.cutoff = 500L) # check the formula
-	if (!is(formula, "formula")) stop("formula argument in ranger() needs a formula starting with ~")
+	if (!is(formula, "formula")) stop("formula argument in grf() needs a formula starting with ~")
 
 	# get where "gamlss" is in system call
 	# it can be in gamlss() or predict.gamlss()
@@ -21,6 +20,7 @@ rf <- function(formula, ...){
 		position <- i # get the position, we are geting the fist from the last
 		if (rexpr[i] == TRUE) break
 	}
+
 	gamlss.env <- sys.frame(position) # gamlss or predict.gamlss
 	if (sys.call(position)[1] == "predict.gamlss()") { # if predict is used
 		Data <- get("data", envir = gamlss.env)
@@ -43,7 +43,7 @@ rf <- function(formula, ...){
 	attr(xvar, "control") <- control
 	attr(xvar, "gamlss.env") <- gamlss.env
 	attr(xvar, "data") <- as.data.frame(Data)
-	attr(xvar, "call") <- substitute(gamlss.rf(data[[scall]], z, w, ...))
+	attr(xvar, "call") <- substitute(gamlss.own(data[[scall]], z, w, ...))
 	attr(xvar, "class") <- "smooth"
 	xvar
 }
@@ -52,7 +52,7 @@ rf <- function(formula, ...){
 ################################################################################
 ################################################################################
 # the definition of the backfitting additive function
-gamlss.rf <- function(x, y, w, xeval = NULL, ...) {
+gamlss.own <- function(x, y, w, xeval = NULL, ...) {
 	formula <- attr(x, "formula")
 	formula <- as.formula(paste("y", deparse(formula, width.cutoff = 500L), sep = ""))
 	control <- as.list(attr(x, "control"))
@@ -64,20 +64,31 @@ gamlss.rf <- function(x, y, w, xeval = NULL, ...) {
 	} else {
 		OData[seq(1, length(y)), ]
 	}
+
 	Data <- data.frame(eval(substitute(Data)), y, w)
 	rexpr <- regexpr("gamlss", sys.calls())
-	nt <- if(is.null(control$num.trees)){
+
+	nt <- if(is.null(control$num.trees)){ # The number of trees (num.trees)
 		500 # Uses 500 as a default value, like ranger does
 	} else {
 		control$num.trees
 	}
 
-	fit <- ranger::ranger(formula, data = Data, case.weights = w, num.trees = nt,
-		write.forest = TRUE, oob.error = FALSE, seed = 1)
+	if(length(formula) == 3){
+		ks <- all.vars(formula[[3]])
+	} else {
+		ks <- all.vars(formula[[2]])
+	}
+
+	fit <- regression_forest(X = Data[, ks], Y = Data[,'y'],
+		sample.weights = w, num.trees = nt,
+		seed = 1)
 
 	if (is.null(xeval)) { # This is for fit/not-prediction
-		df <- sum(sapply(fit$forest$split.varIDs, length)) # Number of break point - I wonder if this is the best way to calculate df
-		fv <- predict(fit, data = Data, predict.all = FALSE, type = "response", seed = 1)$predictions
+		df <- NA
+
+		fv <- predict(fit, Data[,ks])$predictions
+
 		residuals <- Data[,'y'] - fv # Raw residuals
 
 		list(fitted.values = fv, residuals = residuals,
@@ -86,7 +97,7 @@ gamlss.rf <- function(x, y, w, xeval = NULL, ...) {
 			coefSmo = fit, var = NA)
 	} else { # this is for prediction/not-fit
 		ndata <- subset(OData, source == "newdata")
-		pred <- predict(fit, data = ndata, predict.all = FALSE, type = "response", seed = 1)$predictions
+		pred <- predict(fit, ndata[,ks])$predictions
 		pred
 	}
 }
@@ -94,3 +105,4 @@ gamlss.rf <- function(x, y, w, xeval = NULL, ...) {
 ################################################################################
 ################################################################################
 ################################################################################
+
