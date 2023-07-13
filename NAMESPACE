@@ -15,6 +15,7 @@ import(SOP)
 #import(randomForest)
 importFrom("methods", "is")
 importFrom("ranger", "ranger")
+importFrom("grf", "regression_forest")
 #importFrom(gamlss.nl)
 #importFrom(nnet, nnet)
 #

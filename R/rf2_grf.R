@@ -2,12 +2,12 @@
 ################################################################################
 ################################################################################
 ################################################################################
-require(grf)
+# require(grf)
 ################################################################################
 ################################################################################
 ################################################################################
 ################################################################################
-own <- function(formula, ...){
+rf2 <- function(formula, ...){
 	control <- as.list(match.call())
 #---------------------------------
 	scall <- deparse(sys.call(), width.cutoff = 500L) # check the formula
@@ -43,7 +43,7 @@ own <- function(formula, ...){
 	attr(xvar, "control") <- control
 	attr(xvar, "gamlss.env") <- gamlss.env
 	attr(xvar, "data") <- as.data.frame(Data)
-	attr(xvar, "call") <- substitute(gamlss.own(data[[scall]], z, w, ...))
+	attr(xvar, "call") <- substitute(gamlss.rf2(data[[scall]], z, w, ...))
 	attr(xvar, "class") <- "smooth"
 	xvar
 }
@@ -52,7 +52,7 @@ own <- function(formula, ...){
 ################################################################################
 ################################################################################
 # the definition of the backfitting additive function
-gamlss.own <- function(x, y, w, xeval = NULL, ...) {
+gamlss.rf2 <- function(x, y, w, xeval = NULL, ...) {
 	formula <- attr(x, "formula")
 	formula <- as.formula(paste("y", deparse(formula, width.cutoff = 500L), sep = ""))
 	control <- as.list(attr(x, "control"))
@@ -80,7 +80,7 @@ gamlss.own <- function(x, y, w, xeval = NULL, ...) {
 		ks <- all.vars(formula[[2]])
 	}
 
-	fit <- regression_forest(X = Data[, ks], Y = Data[,'y'],
+	fit <- grf::regression_forest(X = Data[, ks], Y = Data[,'y'],
 		sample.weights = w, num.trees = nt,
 		seed = 1)
 

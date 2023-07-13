@@ -2,6 +2,7 @@
 ################################################################################
 ################################################################################
 ################################################################################
+################################################################################
 so <- SOP <- function (formula, control = sop.control(...), ...) 
 {
 #------------------------------------------
@@ -63,28 +64,6 @@ attr(xvar, "NameForLambda") <- startLambdaName
             attr(xvar, "G") <- G
   xvar
 }
-
-# ga.control  <- function (offset = NULL, 
-#                           method = "REML", 
-#                        optimizer = c("outer","newton"), 
-#                           select = FALSE, 
-#                            knots = NULL, 
-#                               sp = NULL, 
-#                           min.sp = NULL, 
-#                                H = NULL, 
-#                            gamma = 1, 
-#                          paraPen = NULL, 
-#                           in.out = NULL, 
-#               drop.unused.levels = TRUE, 
-#                   drop.intercept = NULL, ...) 
-# {
-#   control <- gam.control(...)
-#   list(offset = offset, method = method, optimizer = optimizer, 
-#        control = control, select = select, knots = knots, sp = sp, 
-#        min.sp = min.sp, H = H, gamma = gamma, paraPen = paraPen, 
-#        in.out = in.out, drop.unused.levels = drop.unused.levels, 
-#        drop.intercept = drop.intercept, ...)
-# }
 ################################################################################
 ################################################################################
 ################################################################################
@@ -132,9 +111,7 @@ list(fitted.values = fv, residuals = residuals, nl.df = edf,
             obj <- get("object", envir = gamlss.env)
              TT <- get("TT", envir = gamlss.env)
              SL <- get("smooth.labels", envir = gamlss.env)
-            fit <- eval(parse(text = paste("obj$", get("what", envir = gamlss.env), 
-                                   ".coefSmo[[", as.character(match(TT, SL)), "]]", 
-                                   sep = "")))
+            fit <- eval(parse(text = paste("obj$", get("what", envir = gamlss.env), ".coefSmo[[", as.character(match(TT, SL)), "]]", sep = "")))
          OData <- attr(x, "data")
             ll <- dim(OData)[1]
           pred <- predict(fit, newdata = OData[seq(length(y) + 1, ll), ])
