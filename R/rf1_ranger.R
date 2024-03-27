@@ -141,8 +141,7 @@ importance <- if(is.null(control$importance))
 	# y = NULL
 if (is.null(xeval)) { # This is for fit/not-prediction
 		df <-  sum(sapply(fit$forest$split.varIDs, function(x) sum(x)/nt))
-		cat("df=", df, "\n")
-		browser()
+	#	cat("df=", df, "\n")
 		#  sum(sapply(fit$forest$split.varIDs, length))  # Number of break point - I wonder if this is the best way to calculate df
 		fv <- predict(fit, data = Data, predict.all = FALSE, type = "response", seed = 1)$predictions
 		residuals <- Data[,'y'] - fv # Raw residuals
