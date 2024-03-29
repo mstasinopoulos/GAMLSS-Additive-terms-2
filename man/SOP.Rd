@@ -8,11 +8,12 @@
 \description{
 The function \code{SOP()} (or \code{so()})  is an interface for fitting an additive P-Spline regression models using the separation of overlapping precision matrices (SOP) method of Rodriguez-Alvarez \emph{at al.} (2015, 2019) (implemented in the  package \pkg{SOP}) within GAMLSS.
 
-The idea is that SOP can be used for other parameters of the distribution rather than  only for \code{mu}.  
+The idea of conection  SOP with GAMLSS. is that other parameters of the distribution rather than  only for \code{mu} can be also modelled as smooth functions of the explaratory variables.  
 Look in the help file of the package \pkg{SOP} for the available functions
 \pkg{SOP} contains two usefull functions: tensor product P-spline smoothing i.e. \code{~f(x1,x2)} and adaptive smoothing \code{~ad(x1)}.  
 
 The function \code{gamlss.so()} is support for \code{so()}. It is not intended to be called directly by users. The function \code{gamlss.so()} is calling the function \code{sop()} of the package \pkg{SOP}.
+
 }
 \usage{
 SOP(formula, control = sop.control(...), ...)
@@ -31,11 +32,9 @@ gamlss.so(x, y, w, xeval = NULL, ...)
   \item{xeval}{used in prediction}
   \item{\dots}{extra arguments}
 }
-%\details{
-%There are two  to enter a term in the model using a P-spline 
-%}
+
 \value{
-returms fitted models for each parameters which can be retreived using the function \code{gerSmo()}.
+Returms fitted models for each parameters which can be retreived using the function \code{gerSmo()}.
 }
 \references{
 Eilers, P.H.C. and Marx, B.D. (1996). Flexible smoothing with B-splines and penalties. \emph{Statistical Science}, \bold{11 (2)}, 89--121.
@@ -60,6 +59,7 @@ Stasinopoulos D. M. Rigby R.A. Heller G. Voudouris V. De Bastiani F. (2017) \emp
 Stasinopoulos, M. D., Rigby, R. A., and De Bastiani F., (2018) GAMLSS: a distributional regression approach, \emph{Statistical Modelling}, Vol. \bold{18}, 
 pp, 248-273, SAGE Publications Sage India: New Delhi, India. \doi{10.1177/1471082X18759144}
 
+
 (see also  \url{https://www.gamlss.com/}).
 }
 
@@ -71,10 +71,10 @@ pp, 248-273, SAGE Publications Sage India: New Delhi, India. \doi{10.1177/147108
 \examples{
 m1 <- gamlss(R~SOP(~f(Fl)+f(A)), data=rent)
 m2 <- gamlss(R~SOP(~f(Fl)+ad(A)), data=rent)
- par(mfrow=c(2,2))
+m3 <- gamlss(R~SOP(~f(Fl, A)), data=rent)
+par(mfrow=c(2,2))
 plot(getSmo(m1), ask=FALSE)
 plot(getSmo(m2), ask=FALSE)
-m3 <- gamlss(R~SOP(~f(Fl, A)), data=rent)
 par(mfrow=c(1,1))
 plot(getSmo(m3))
 }
